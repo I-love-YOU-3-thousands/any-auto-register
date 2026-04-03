@@ -354,8 +354,8 @@ class AppleMailMailbox(BaseMailbox):
         response = requests.request(
             method,
             f"{self.api}{path}",
-            params=None,
-            json=payload,
+            params=payload,
+            json=None,
             headers=self._headers(),
             proxies=self.proxy,
             timeout=timeout,
@@ -515,11 +515,17 @@ class AppleMailMailbox(BaseMailbox):
 
     def _list_messages(self, account: MailboxAccount, mailbox: str) -> list[dict[str, Any]]:
         data = self._request_json(
-            "POST",
+            "GET",
             "/api/mail-all",
             payload=self._build_request_payload(account, mailbox),
             timeout=15,
         )
+        if isinstance(data, dict):
+            new_refresh_token = str(data.get("new_refresh_token") or "").strip()
+            if new_refresh_token:
+                if account.extra is None:
+                    account.extra = {}
+                account.extra["refresh_token"] = new_refresh_token
         return self._unwrap_message_payload(data)
 
     def get_email(self) -> MailboxAccount:

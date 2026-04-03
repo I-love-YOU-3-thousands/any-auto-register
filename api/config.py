@@ -26,6 +26,7 @@ CONFIG_KEYS = [
     "skymail_token",
     "skymail_domain",
     "mail_provider",
+    "mailbox_otp_timeout_seconds",
     "maliapi_base_url",
     "maliapi_api_key",
     "maliapi_domain",

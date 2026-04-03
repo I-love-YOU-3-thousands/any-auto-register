@@ -76,7 +76,10 @@ const TAB_ITEMS = [
       {
         title: '默认邮箱服务',
         desc: '选择注册时使用的邮箱类型',
-        fields: [{ key: 'mail_provider', label: '邮箱服务', type: 'select' }],
+        fields: [
+          { key: 'mail_provider', label: '邮箱服务', type: 'select' },
+          { key: 'mailbox_otp_timeout_seconds', label: '邮箱验证码等待秒数', placeholder: '例如 60 / 90 / 120' },
+        ],
       },
       {
         title: 'Laoudo',
